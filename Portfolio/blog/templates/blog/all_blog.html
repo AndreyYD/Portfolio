@@ -1,13 +1,32 @@
 {% extends 'portfolio/base.html' %}
 {% block content %}
 
-        <h1>Andrey has written {{ blogs.count }} blog{{ blog.count|pluralize }}</h1>
+<main>
+    <div class="container">
+        <h1 class="blog-heading">Andrey has written {{ blogs.count }} blog{{ blog.count|pluralize }}</h1>
+    </div>
+    {% for blog in blogs %}
+    <div class="container">
+        <ul class="blog-title-list">          
+            <li class="blog-title-item">
+                <a href="{% url 'blog:detail' blog.id %}">
+                    <h2 class="blog-title-text">{{ blog.title }}</h2>
+                </a>
+            </li>
+            <li class="blog-title-item">
+                <h3>{{ blog.date }}</h3>
+            </li>           
+        </ul>
+        <ul class="blog-discription-list">           
+            <li class="blog-discription-item">
+                <img class="blog-discription-image" src="{{ blog.image.url }}">
+            </li>
+            <li class="blog-discription-item">
+                <p>{{ blog.discription|truncatechars:300 }}</p>
+            </li>          
+        </ul>
+    </div>
+    {% endfor %}
+</main>
 
-        {% for blog in blogs %}
-            <a href="{% url 'blog:detail' blog.id %}">
-                <h2>{{ blog.title }}</h2>
-            </a>
-            <h5>{{ blog.date }}</h5>
-            <p>{{ blog.discription|truncatechars:100 }}</p>
-        {% endfor %}
 {% endblock %}
